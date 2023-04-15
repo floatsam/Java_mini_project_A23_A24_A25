@@ -89,7 +89,7 @@ public class Job_Type {
         }
     }
     
-    private static void loadJobs() {
+    public static List<Job> loadJobs() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(FILENAME)));
             jobs = new ArrayList<Job>();
@@ -97,7 +97,6 @@ public class Job_Type {
             jobs = (List<Job>)ois.readObject();
 
             ois.close();
-
             //for(Job job : jobs){
             //    System.out.println(job.toString());
             //}
@@ -105,10 +104,32 @@ public class Job_Type {
             System.out.println("File not found or corrupted!");
             e.printStackTrace();
         }
+        return jobs;
     }
-    public static void JobCreationInterface(){
+
+    public static void clrscr(){
+
+        //Clears Screen in java
+    
+        try {
+    
+            if (System.getProperty("os.name").contains("Windows"))
+    
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    
+            else
+    
+                Runtime.getRuntime().exec("clear");
+    
+        } catch (IOException | InterruptedException ex) {
+            System.out.println("Failed to clear screen, exiting...");
+        }
+    
+    }
+
+    public static void JobCreationInterface() throws IOException{
         Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome to job creation interface");
+        System.out.println("\n\nWelcome to job creation interface");
         System.out.println("To create a job, follow the instructions as they are given");
         System.out.println("Enter job name");
         String job_name = sc.nextLine();
@@ -119,11 +140,13 @@ public class Job_Type {
         System.out.println("Enter job description");
         String job_desc = sc.nextLine();
         Job job1 = new Job(job_name, job_prim, job_sec, job_desc);
+        clrscr();
         addJob(job1);
         System.out.println("Job successfully created and saved...");
         //loadJobs();
         //displayJobs();
-        sc.close();
+        //sc.nextLine();
+        //sc.close();
     }
 }
 

@@ -40,7 +40,7 @@ class JobDetails implements Serializable{
         return "Name :" + name + "\nE-mail :" + email + "\nSkill :" + skill +  "\nPhone Number :" + phno + "\n";
     }
 }
-@SuppressWarnings("")
+@SuppressWarnings("unchecked")
 public class JobSeeker{
 
     public static List<JobDetails> seekers;
@@ -93,7 +93,7 @@ public class JobSeeker{
         }
     }
     
-    private static void loadSeekers() {
+    public static List<JobDetails> loadSeekers() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(FILEN)));
             seekers = new ArrayList<JobDetails>();
@@ -102,18 +102,19 @@ public class JobSeeker{
 
             ois.close();
 
-            for(JobDetails job : seekers){
-                System.out.println(job.toString());
-            }
+            //for(JobDetails job : seekers){
+            //    System.out.println(job.toString());
+            //}
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("File not found or corrupted!");
             e.printStackTrace();
         }
+        return seekers;
     }
 
     public static void JobSeekerInterface() throws IOException, FileNotFoundException {
         Scanner sc1 = new Scanner(System.in);
-        System.out.println("Looking for jobs, this interface is for you!");
+        System.out.println("\n\nLooking for jobs, this interface is for you!");
         System.out.println("Enter your name");
         String nm = sc1.nextLine();
         System.out.println("Enter your email");
@@ -125,7 +126,8 @@ public class JobSeeker{
         JobDetails j1 = new JobDetails(nm, gt, phno, skill);
         addSeekers(j1);
         //loadSeekers();
+        Job_Type.clrscr();
         System.out.println("Job Seeker details have been entered into the database successfully!");
-        sc1.close();
+        //sc1.close();
     }
 }
